@@ -37,4 +37,4 @@
 yan-debug.log*
 .yarn-integrity
 /vms/*.log
-/vms/.vagrantr
+/deploy/vms/.vagrant
