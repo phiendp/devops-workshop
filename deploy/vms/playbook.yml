@@ -1,0 +1,27 @@
+- hosts: unicorn
+  become: true
+  tasks:
+    - name: create new user
+      user:
+        name: workshop
+    - name: install unzip
+      apt:
+        name:
+          unzip
+    - name: create tmp folder
+      file:
+        path: '/home/workshop/hello/'
+        state: directory
+        owner: workshop
+        group: workshop
+        mode: '0755'
+    - name: Download file
+      get_url:
+        url: https://github.com/trietphm/workshop-rails-vue/releases/download/v0.1/hello-world.zip
+        dest: /tmp/hello-world.zip
+    - name: Extract file into hello
+      become: true
+      unarchive:
+        src: /tmp/hello-world.zip
+        remote_src: yes
+        dest: '/home/workshop/hello'
