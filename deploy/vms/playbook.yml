@@ -1,14 +1,14 @@
 - hosts: unicorn
   become: true
   tasks:
-    - name: create new user
+    - name: Create new user
       user:
         name: workshop
-    - name: install unzip
+    - name: Install unzip
       apt:
         name:
           unzip
-    - name: create tmp folder
+    - name: Create tmp folder
       file:
         path: '/home/workshop/hello/'
         state: directory
