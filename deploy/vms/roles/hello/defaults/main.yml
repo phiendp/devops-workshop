@@ -1,0 +1,9 @@
+hello_user_name: workshop
+hello_group_name: workshop
+hello_home_dir: "/home/{{ hello_user_name }}/hello"
+hello_git_url: https://github.com/trietphm/workshop-rails-vue/releases/download/v0.1/hello-world.zip
+hello_download_path: /tmp/hello-world.zip
+hello_binary_file: "hello-world"
+hello_cow_message: "Hello guys!"
+hello_output_filename: messages.txt
+hello_output_file: "{{ hello_home_dir }}/{{ hello_output_filename }}"

@@ -1,0 +1,42 @@
+- name: install package unzip
+  become: true
+  apt:
+    name:
+      - zip
+      - unzip
+    state: present
+- name: create folder
+  become: true
+  file:
+    path: "{{ hello_home_dir }}"
+    state: directory
+    owner: "{{ hello_user_name }}"
+    group: "{{ hello_group_name }}"
+- name: download zip file
+  get_url:
+    url: "{{ hello_git_url }}"
+    dest: "{{ hello_download_path }}"
+- name: unzip file
+  become: true
+  unarchive:
+    src: "{{ hello_download_path }}"
+    dest: "{{ hello_home_dir }}"
+    remote_src: true
+- name: execute binary file
+  command: "./{{ hello_binary_file }}"
+  args:
+    chdir: "{{ hello_home_dir }}"
+  register: hello_world_message
+- name: execute binary file with env keys
+  command: "./{{ hello_binary_file }}"
+  args:
+    chdir: "{{ hello_home_dir }}"
+  register: cow_message
+  environment:
+    COW: "true"
+    MESSAGE: "{{ hello_cow_message }}"
+- name: write variable to file
+  become: true
+  copy:
+    content: "{{ hello_world_message.stdout }}\n{{ cow_message.stdout }}"
+    dest: "{{ hello_output_file }}"
