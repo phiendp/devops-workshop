@@ -25,3 +25,21 @@
         src: /tmp/hello-world.zip
         remote_src: yes
         dest: '/home/workshop/hello'
+    - name: Execute binary file
+      command: './hello-world'
+      args:
+        chdir: '/home/workshop/hello'
+      register: hello_world_message
+    - name: Execute binary file again
+      command: './hello-world'
+      args:
+        chdir: '/home/workshop/hello'
+      register: cow_message
+      environment:
+        COW: 'true'
+        MESSAGE: 'Hello guys!'
+    - name: Write the two above variables values into output file
+      become: true
+      copy:
+        content: "{{hello_world_message.stdout}}\n {{cow_message.stdout}}"
+        dest: /home/workshop/hello/messages.txt
